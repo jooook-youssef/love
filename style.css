@@ -381,12 +381,9 @@ input:focus {
 }
 
 
-/* ================= Photo ================= */
+/* ================= Memory Text Box ================= */
 
-.photo {
-
-    position:
-        relative;
+.memory-box {
 
     width:
         100%;
@@ -394,64 +391,17 @@ input:focus {
     max-width:
         520px;
 
+    min-height:
+        300px;
+
     margin:
-        auto;
+        20px auto;
 
     padding:
-        9px;
-
-    border-radius:
-        28px;
-
-    background:
-        rgba(255,255,255,.8);
-
-    box-shadow:
-        0 20px 55px
-        rgba(196,78,120,.15);
-}
-
-.photo img {
-
-    display:
-        block;
-
-    width:
-        100%;
-
-    aspect-ratio:
-        4 / 5;
-
-    object-fit:
-        cover;
-
-    border-radius:
-        21px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fce3ec,
-            #ffffff
-        );
-}
-
-.photo-placeholder {
-
-    position:
-        absolute;
-
-    inset:
-        9px;
-
-    border-radius:
-        21px;
+        35px 25px;
 
     display:
         flex;
-
-    flex-direction:
-        column;
 
     align-items:
         center;
@@ -459,48 +409,35 @@ input:focus {
     justify-content:
         center;
 
-    gap:
-        8px;
+    border-radius:
+        28px;
 
     background:
         linear-gradient(
             135deg,
-            #fce3ec,
-            #fff
+            rgba(255,255,255,.95),
+            rgba(255,225,236,.9)
         );
 
-    color:
-        #c68199;
+    border:
+        1px solid
+        rgba(255,255,255,.9);
 
-    font-size:
-        45px;
-
-    pointer-events:
-        none;
+    box-shadow:
+        0 20px 55px
+        rgba(196,78,120,.15);
 }
 
-.photo-placeholder span {
-
-    font-size:
-        14px;
-}
-
-
-/* ================= Memory Text ================= */
-
-.memory-text {
-
-    padding:
-        18px 10px 0;
-
-    min-height:
-        90px;
-}
-
-.memory-text p {
+.memory-box p {
 
     color:
         #805769;
+
+    font-size:
+        17px;
+
+    line-height:
+        2.1;
 
     white-space:
         pre-line;
@@ -698,14 +635,22 @@ input:focus {
             10px 0;
     }
 
-    .photo {
-        max-width:
-            100%;
+    .memory-box {
+
+        min-height:
+            260px;
+
+        padding:
+            28px 20px;
     }
 
-    .memory-text p {
+    .memory-box p {
+
         font-size:
-            14px;
+            15px;
+
+        line-height:
+            2;
     }
 
     .btn {
@@ -730,4 +675,4 @@ input:focus {
         bottom:
             14px;
     }
-}
+        }
