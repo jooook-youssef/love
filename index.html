@@ -1,1 +1,470 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Our Story 💗</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><div id="hearts"></div><main class="page"><section class="screen"><div class="card center"><div class="lock">🔐</div><p class="eyebrow">A little surprise for you</p><h1>Our Story 💗</h1><p>اكتب كلمة السر عشان تبدأ الحكاية.</p><input id="password" type="password" placeholder="كلمة السر"><button class="btn" onclick="unlock()">Unlock ❤️</button><small id="error"></small></div></section></main><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Our Story ❤️</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ================= Floating Hearts ================= -->
+
+<div id="hearts"></div>
+
+
+<!-- ================= Music ================= -->
+
+<audio
+    id="bgMusic"
+    src="assets/music/song.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<!-- ================= Website ================= -->
+
+<main id="app">
+
+
+    <!-- ================= Unlock ================= -->
+
+    <section
+        class="page active"
+        id="unlockPage"
+    >
+
+        <div class="card center">
+
+            <div class="lock">
+                🔐
+            </div>
+
+            <span class="eyebrow">
+                A little surprise for you
+            </span>
+
+            <h1>
+                Our Story ❤️
+            </h1>
+
+            <p>
+                اكتب كلمة السر عشان تبدأ الحكاية
+            </p>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="كلمة السر"
+            >
+
+            <button
+                class="btn"
+                id="unlockButton"
+            >
+                Unlock ❤️
+            </button>
+
+            <small id="error"></small>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= Message ================= -->
+
+    <section
+        class="page"
+        id="messagePage"
+    >
+
+        <div class="card center">
+
+            <span class="number">
+                MESSAGE
+            </span>
+
+            <h1>
+                رسالة ليك 💌
+            </h1>
+
+            <div class="message-text">
+
+                <p>
+                    اكتب هنا رسالتك الخاصة.
+
+                    دي المساحة اللي هتحط فيها
+                    الكلام اللي نفسك توصله.
+
+                    ممكن تعدل النص بالكامل
+                    وقت ما تحب ❤️
+                </p>
+
+            </div>
+
+            <button
+                class="btn next"
+                data-next="memory1Page"
+            >
+                نبدأ الذكريات ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= Memory 1 ================= -->
+
+    <section
+        class="page"
+        id="memory1Page"
+    >
+
+        <div class="memory">
+
+            <span class="number">
+                MEMORY 01 / 04
+            </span>
+
+            <h1>
+                أول ذكرى ❤️
+            </h1>
+
+            <div class="photo">
+
+                <img
+                    src="assets/images/01.jpg"
+                    alt="Memory 01"
+                >
+
+                <div class="photo-placeholder">
+                    📸
+                    <span>
+                        ضع الصورة هنا
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="memory-text">
+
+                <p>
+                    اكتب هنا الكلام الخاص
+                    بالذكرى الأولى.
+                </p>
+
+            </div>
+
+            <button
+                class="btn next"
+                data-next="memory2Page"
+            >
+                التالي ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= Memory 2 ================= -->
+
+    <section
+        class="page"
+        id="memory2Page"
+    >
+
+        <div class="memory">
+
+            <span class="number">
+                MEMORY 02 / 04
+            </span>
+
+            <h1>
+                ذكرى جميلة 💕
+            </h1>
+
+            <div class="photo">
+
+                <img
+                    src="assets/images/02.jpg"
+                    alt="Memory 02"
+                >
+
+                <div class="photo-placeholder">
+                    📸
+                    <span>
+                        ضع الصورة هنا
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="memory-text">
+
+                <p>
+                    اكتب هنا الكلام الخاص
+                    بالذكرى الثانية.
+                </p>
+
+            </div>
+
+            <button
+                class="btn next"
+                data-next="memory3Page"
+            >
+                التالي ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= Memory 3 ================= -->
+
+    <section
+        class="page"
+        id="memory3Page"
+    >
+
+        <div class="memory">
+
+            <span class="number">
+                MEMORY 03 / 04
+            </span>
+
+            <h1>
+                ذكرى لا تنسى 💗
+            </h1>
+
+            <div class="photo">
+
+                <img
+                    src="assets/images/03.jpg"
+                    alt="Memory 03"
+                >
+
+                <div class="photo-placeholder">
+                    📸
+                    <span>
+                        ضع الصورة هنا
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="memory-text">
+
+                <p>
+                    اكتب هنا الكلام الخاص
+                    بالذكرى الثالثة.
+                </p>
+
+            </div>
+
+            <button
+                class="btn next"
+                data-next="memory4Page"
+            >
+                التالي ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= Memory 4 ================= -->
+
+    <section
+        class="page"
+        id="memory4Page"
+    >
+
+        <div class="memory">
+
+            <span class="number">
+                MEMORY 04 / 04
+            </span>
+
+            <h1>
+                آخر ذكرى 💖
+            </h1>
+
+            <div class="photo">
+
+                <img
+                    src="assets/images/04.jpg"
+                    alt="Memory 04"
+                >
+
+                <div class="photo-placeholder">
+                    📸
+                    <span>
+                        ضع الصورة هنا
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="memory-text">
+
+                <p>
+                    اكتب هنا الكلام الخاص
+                    بالذكرى الرابعة.
+                </p>
+
+            </div>
+
+            <button
+                class="btn next"
+                data-next="videoPage"
+            >
+                نشوف الفيديو 🎬
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= Video ================= -->
+
+    <section
+        class="page"
+        id="videoPage"
+    >
+
+        <div class="card center">
+
+            <span class="number">
+                OUR VIDEO
+            </span>
+
+            <h1>
+                وأخيرًا... 🎬
+            </h1>
+
+            <div class="video-box">
+
+                <video
+                    id="storyVideo"
+                    controls
+                    playsinline
+                    preload="metadata"
+                >
+
+                    <source
+                        src="assets/videos/video.mp4"
+                        type="video/mp4"
+                    >
+
+                    المتصفح لا يدعم تشغيل الفيديو.
+
+                </video>
+
+                <div class="video-placeholder">
+                    🎬
+                    <span>
+                        ضع الفيديو هنا
+                    </span>
+                </div>
+
+            </div>
+
+            <button
+                class="btn next"
+                data-next="finalPage"
+            >
+                النهاية ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= Final ================= -->
+
+    <section
+        class="page"
+        id="finalPage"
+    >
+
+        <div class="card center">
+
+            <div class="big-heart">
+                ♥
+            </div>
+
+            <span class="number">
+                THE END
+            </span>
+
+            <h1>
+                ولسه الحكاية مكملة ❤️
+            </h1>
+
+            <p>
+                اكتب هنا رسالتك الأخيرة.
+            </p>
+
+            <p class="signature">
+                With love, always 💗
+            </p>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
