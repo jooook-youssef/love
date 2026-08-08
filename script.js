@@ -1,433 +1,113 @@
 /* =====================================================
-   Love Story Website
-   Main JavaScript
+   LOVE STORY - SINGLE PAGE
    ===================================================== */
 
 
-/* =====================================================
-   Music System
-   ===================================================== */
+/* ================= Elements ================= */
 
-const MUSIC_FILE = "assets/music/song.mp3";
+const music =
+    document.getElementById("bgMusic");
 
-let music = null;
+const pages =
+    document.querySelectorAll(".page");
 
+const unlockButton =
+    document.getElementById("unlockButton");
 
-/* -----------------------------------------------------
-   Create Music Player
-   ----------------------------------------------------- */
+const password =
+    document.getElementById("password");
 
-function createMusicPlayer() {
-
-    if (document.getElementById("bgMusic")) {
-        music = document.getElementById("bgMusic");
-    } else {
-
-        music = document.createElement("audio");
-
-        music.id = "bgMusic";
-        music.src = MUSIC_FILE;
-
-        music.preload = "auto";
-
-        music.loop = true;
-
-        music.volume = 0.5;
-
-        music.style.display = "none";
-
-        document.body.appendChild(music);
-    }
-
-}
+const error =
+    document.getElementById("error");
 
 
-/* -----------------------------------------------------
-   Save Music Position
-   ----------------------------------------------------- */
+/* ================= Music ================= */
 
-function saveMusicPosition() {
-
-    if (!music) return;
-
-    try {
-
-        localStorage.setItem(
-            "musicTime",
-            music.currentTime
-        );
-
-        localStorage.setItem(
-            "musicPlaying",
-            music.paused ? "false" : "true"
-        );
-
-    } catch (error) {
-
-        console.log(
-            "Could not save music position."
-        );
-
-    }
-
-}
-
-
-/* -----------------------------------------------------
-   Restore Music Position
-   ----------------------------------------------------- */
-
-function restoreMusicPosition() {
-
-    if (!music) return;
-
-    const savedTime =
-        localStorage.getItem("musicTime");
-
-    if (savedTime !== null) {
-
-        const time =
-            parseFloat(savedTime);
-
-        if (!isNaN(time)) {
-
-            music.addEventListener(
-                "loadedmetadata",
-                function restoreTime() {
-
-                    if (
-                        time >= 0 &&
-                        time < music.duration
-                    ) {
-
-                        music.currentTime = time;
-
-                    }
-
-                    music.removeEventListener(
-                        "loadedmetadata",
-                        restoreTime
-                    );
-
-                }
-            );
-
-        }
-
-    }
-
-}
-
-
-/* -----------------------------------------------------
-   Start Music
-   ----------------------------------------------------- */
-
-function startMusic() {
-
-    if (!music) return;
+if (music) {
 
     music.volume = 0.5;
 
-    const playPromise =
-        music.play();
+    music.loop = true;
 
-    if (
-        playPromise !== undefined
-    ) {
+}
 
-        playPromise.catch(
-            function () {
 
-                console.log(
-                    "Music playback requires user interaction."
-                );
+/* ================= Show Page ================= */
 
-            }
-        );
+function showPage(id) {
+
+    pages.forEach(page => {
+
+        page.classList.remove("active");
+
+    });
+
+
+    const target =
+        document.getElementById(id);
+
+
+    if (target) {
+
+        target.classList.add("active");
 
     }
 
-}
 
-
-/* -----------------------------------------------------
-   Toggle Music
-   ----------------------------------------------------- */
-
-function toggleMusic() {
-
-    if (!music) return;
-
-    if (music.paused) {
-
-        startMusic();
-
-    } else {
-
-        music.pause();
-
-    }
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 }
 
 
-/* -----------------------------------------------------
-   Music Button
-   ----------------------------------------------------- */
-
-function createMusicButton() {
-
-    if (
-        document.getElementById(
-            "musicButton"
-        )
-    ) {
-        return;
-    }
-
-
-    const button =
-        document.createElement("button");
-
-    button.id =
-        "musicButton";
-
-    button.type =
-        "button";
-
-    button.innerHTML =
-        "🎵";
-
-    button.title =
-        "تشغيل / إيقاف الموسيقى";
-
-
-    button.style.position =
-        "fixed";
-
-    button.style.bottom =
-        "20px";
-
-    button.style.left =
-        "20px";
-
-    button.style.width =
-        "52px";
-
-    button.style.height =
-        "52px";
-
-    button.style.border =
-        "none";
-
-    button.style.borderRadius =
-        "50%";
-
-    button.style.background =
-        "linear-gradient(135deg,#f28caf,#e05283)";
-
-    button.style.color =
-        "#ffffff";
-
-    button.style.fontSize =
-        "22px";
-
-    button.style.cursor =
-        "pointer";
-
-    button.style.zIndex =
-        "9999";
-
-    button.style.boxShadow =
-        "0 8px 25px rgba(224,82,131,.30)";
-
-
-    button.addEventListener(
-        "click",
-        function () {
-
-            toggleMusic();
-
-        }
-    );
-
-
-    document.body.appendChild(button);
-
-}
-
-
-/* -----------------------------------------------------
-   Update Music Button
-   ----------------------------------------------------- */
-
-function updateMusicButton() {
-
-    const button =
-        document.getElementById(
-            "musicButton"
-        );
-
-    if (!button || !music) return;
-
-
-    if (music.paused) {
-
-        button.innerHTML =
-            "🎵";
-
-        button.style.opacity =
-            "0.75";
-
-    } else {
-
-        button.innerHTML =
-            "🔊";
-
-        button.style.opacity =
-            "1";
-
-    }
-
-}
-
-
-/* -----------------------------------------------------
-   Music Events
-   ----------------------------------------------------- */
-
-function setupMusicEvents() {
-
-    if (!music) return;
-
-
-    music.addEventListener(
-        "play",
-        updateMusicButton
-    );
-
-
-    music.addEventListener(
-        "pause",
-        function () {
-
-            updateMusicButton();
-
-            saveMusicPosition();
-
-        }
-    );
-
-
-    music.addEventListener(
-        "timeupdate",
-        function () {
-
-            /*
-             * Save approximately every
-             * few seconds.
-             */
-
-            const now =
-                Date.now();
-
-            if (
-                !window.lastMusicSave ||
-                now -
-                window.lastMusicSave >
-                3000
-            ) {
-
-                saveMusicPosition();
-
-                window.lastMusicSave =
-                    now;
-
-            }
-
-        }
-    );
-
-
-    music.addEventListener(
-        "ended",
-        function () {
-
-            localStorage.setItem(
-                "musicTime",
-                "0"
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   Unlock System
-   ===================================================== */
+/* ================= Unlock ================= */
 
 function unlock() {
 
-    const input =
-        document.getElementById(
-            "password"
-        );
+    if (!password) return;
 
-    const error =
-        document.getElementById(
-            "error"
-        );
-
-
-    /*
-     * غيّر كلمة السر هنا
-     */
 
     const correctPassword =
         "1234";
 
 
     if (
-        input &&
-        input.value ===
+        password.value ===
         correctPassword
     ) {
 
-        sessionStorage.setItem(
-            "unlocked",
-            "yes"
-        );
+        if (error) {
+
+            error.textContent =
+                "";
+
+        }
 
 
         /*
-         * يبدأ تشغيل الأغنية
-         * بعد تفاعل المستخدم.
+         * يبدأ الصوت هنا لأن المستخدم
+         * ضغط بنفسه على Unlock.
          */
 
         if (music) {
 
             music.currentTime = 0;
 
-            startMusic();
+            music.play().catch(
+                () => {}
+            );
 
         }
 
 
         /*
-         * الانتقال للصفحة التالية
+         * الانتقال إلى Message
          */
 
-        setTimeout(
-            function () {
-
-                window.location.href =
-                    "intro.html";
-
-            },
-            250
+        showPage(
+            "messagePage"
         );
 
 
@@ -445,235 +125,276 @@ function unlock() {
 }
 
 
-/* =====================================================
-   Protect Pages
-   ===================================================== */
+/* ================= Unlock Button ================= */
 
-function checkUnlock() {
+if (unlockButton) {
 
-    const currentPage =
-        window.location.pathname
-        .split("/")
-        .pop();
-
-
-    /*
-     * الصفحات التي لا تحتاج
-     * إلى تحقق.
-     */
-
-    const publicPages = [
-        "",
-        "index.html"
-    ];
-
-
-    if (
-        publicPages.includes(
-            currentPage
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    const unlocked =
-        sessionStorage.getItem(
-            "unlocked"
-        );
-
-
-    /*
-     * لو حاول الدخول إلى
-     * الصفحات مباشرة بدون Unlock
-     */
-
-    if (
-        unlocked !== "yes"
-    ) {
-
-        window.location.href =
-            "index.html";
-
-    }
+    unlockButton.addEventListener(
+        "click",
+        unlock
+    );
 
 }
 
 
-/* =====================================================
-   Save Music Before Leaving Page
-   ===================================================== */
+/* ================= Enter Key ================= */
 
-window.addEventListener(
-    "beforeunload",
-    function () {
+if (password) {
 
-        saveMusicPosition();
+    password.addEventListener(
+        "keydown",
+        event => {
 
-    }
-);
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                unlock();
+
+            }
+
+        }
+    );
+
+}
 
 
-/* =====================================================
-   Floating Hearts
-   ===================================================== */
+/* ================= Next Buttons ================= */
 
-function createFloatingHearts() {
+document
+    .querySelectorAll(".next")
+    .forEach(button => {
 
-    const container =
-        document.getElementById(
-            "hearts"
+        button.addEventListener(
+            "click",
+            () => {
+
+                const next =
+                    button.dataset.next;
+
+
+                if (next) {
+
+                    showPage(next);
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* ================= Music Button ================= */
+
+function createMusicButton() {
+
+    if (!music) return;
+
+
+    const button =
+        document.createElement(
+            "button"
         );
 
 
-    if (!container) return;
+    button.id =
+        "musicButton";
 
 
-    function createHeart() {
-
-        const heart =
-            document.createElement(
-                "span"
-            );
+    button.innerHTML =
+        "🔊";
 
 
-        heart.className =
-            "heart";
+    button.title =
+        "تشغيل / إيقاف الموسيقى";
 
 
-        const symbols = [
-            "♥",
-            "❤",
-            "♡",
-            "💗"
-        ];
+    button.addEventListener(
+        "click",
+        () => {
 
+            if (music.paused) {
 
-        heart.textContent =
-            symbols[
-                Math.floor(
-                    Math.random() *
-                    symbols.length
-                )
-            ];
+                music.play().catch(
+                    () => {}
+                );
 
+            } else {
 
-        heart.style.left =
-            Math.random() *
-            100 +
-            "%";
+                music.pause();
 
+            }
 
-        heart.style.fontSize =
-            12 +
-            Math.random() *
-            20 +
-            "px";
-
-
-        heart.style.animationDuration =
-            7 +
-            Math.random() *
-            7 +
-            "s";
-
-
-        container.appendChild(
-            heart
-        );
-
-
-        setTimeout(
-            function () {
-
-                heart.remove();
-
-            },
-            15000
-        );
-
-    }
-
-
-    setInterval(
-        createHeart,
-        550
+        }
     );
 
 
-    for (
-        let i = 0;
-        i < 12;
-        i++
-    ) {
+    document.body.appendChild(
+        button
+    );
 
-        setTimeout(
-            createHeart,
-            i * 120
-        );
 
-    }
+    music.addEventListener(
+        "play",
+        () => {
+
+            button.innerHTML =
+                "🔊";
+
+        }
+    );
+
+
+    music.addEventListener(
+        "pause",
+        () => {
+
+            button.innerHTML =
+                "🎵";
+
+        }
+    );
 
 }
 
 
-/* =====================================================
-   Initialize Website
-   ===================================================== */
+/* ================= Floating Hearts ================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        /*
-         * إنشاء الموسيقى
-         */
-
-        createMusicPlayer();
+const hearts =
+    document.getElementById(
+        "hearts"
+    );
 
 
-        /*
-         * استرجاع مكان الأغنية
-         */
+function createHeart() {
 
-        restoreMusicPosition();
+    if (!hearts) return;
 
 
-        /*
-         * أحداث الموسيقى
-         */
-
-        setupMusicEvents();
-
-
-        /*
-         * زر الموسيقى
-         */
-
-        createMusicButton();
+    const heart =
+        document.createElement(
+            "span"
+        );
 
 
-        /*
-         * تحديث حالة الزر
-         */
-
-        updateMusicButton();
+    heart.className =
+        "heart";
 
 
-        /*
-         * حماية الصفحات
-         */
+    const symbols = [
+        "♥",
+        "❤",
+        "♡",
+        "💗"
+    ];
 
-        checkUnlock();
+
+    heart.textContent =
+        symbols[
+            Math.floor(
+                Math.random() *
+                symbols.length
+            )
+        ];
 
 
-        /*
-         * القلوب المتحركة
-         */
+    heart.style.left =
+        Math.random() * 100 +
+        "%";
 
-        createFloatingHearts();
 
-    }
+    heart.style.fontSize =
+        12 +
+        Math.random() * 20 +
+        "px";
+
+
+    heart.style.animationDuration =
+        7 +
+        Math.random() * 7 +
+        "s";
+
+
+    hearts.appendChild(
+        heart
+    );
+
+
+    setTimeout(
+        () => {
+
+            heart.remove();
+
+        },
+        15000
+    );
+
+}
+
+
+setInterval(
+    createHeart,
+    600
 );
+
+
+for (
+    let i = 0;
+    i < 10;
+    i++
+) {
+
+    setTimeout(
+        createHeart,
+        i * 150
+    );
+
+}
+
+
+/* ================= Image Placeholder ================= */
+
+document
+    .querySelectorAll(".photo img")
+    .forEach(img => {
+
+        img.addEventListener(
+            "error",
+            () => {
+
+                img.style.display =
+                    "none";
+
+            }
+        );
+
+    });
+
+
+/* ================= Video Placeholder ================= */
+
+const video =
+    document.getElementById(
+        "storyVideo"
+    );
+
+if (video) {
+
+    video.addEventListener(
+        "error",
+        () => {
+
+            video.style.display =
+                "none";
+
+        }
+    );
+
+}
+
+
+/* ================= Start ================= */
+
+createMusicButton();
