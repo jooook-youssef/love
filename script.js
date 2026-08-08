@@ -70,7 +70,7 @@ function unlock() {
 
 
     const correctPassword =
-        "1234";
+        "love";
 
 
     if (
