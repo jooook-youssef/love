@@ -398,3 +398,45 @@ if (video) {
 /* ================= Start ================= */
 
 createMusicButton();
+
+/* ================= Video Music Control ================= */
+
+const storyVideo =
+    document.getElementById("storyVideo");
+
+let musicTimeBeforeVideo = 0;
+
+if (storyVideo && music) {
+
+    storyVideo.addEventListener(
+        "play",
+        () => {
+
+            if (!music.paused) {
+
+                musicTimeBeforeVideo =
+                    music.currentTime;
+
+                music.pause();
+
+            }
+
+        }
+    );
+
+
+    storyVideo.addEventListener(
+        "ended",
+        () => {
+
+            music.currentTime =
+                musicTimeBeforeVideo;
+
+            music.play().catch(
+                () => {}
+            );
+
+        }
+    );
+
+}
